@@ -7,9 +7,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
       title: "Calculadora de IMC",
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
