@@ -1,4 +1,5 @@
-import 'package:calculadora_de_imc/src/controllers/home_controller.dart';
+import 'package:calculadora_de_imc/src/controllers/imc_controller.dart';
+import 'package:calculadora_de_imc/src/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class GenreCardBox extends StatelessWidget {
@@ -17,12 +18,14 @@ class GenreCardBox extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: genreSelected == genre ? Colors.white : Colors.grey[300],
+            color: genreSelected == genre
+                ? context.primaryContainer
+                : context.secondaryContainer,
             boxShadow: [
               BoxShadow(
                   blurRadius: 10,
                   color: genreSelected == genre
-                      ? Colors.redAccent
+                      ? context.primary
                       : Colors.transparent)
             ]),
         child: Column(
@@ -32,7 +35,8 @@ class GenreCardBox extends StatelessWidget {
             Icon(
               genre.icon,
               size: 50,
-              color: genreSelected == genre ? Colors.redAccent : Colors.grey,
+              color:
+                  genreSelected == genre ? context.primary : context.secondary,
             ),
             Text(
               genre.textGenre,
@@ -40,7 +44,9 @@ class GenreCardBox extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: genreSelected == genre ? Colors.redAccent : Colors.grey,
+                color: genreSelected == genre
+                    ? context.primary
+                    : context.secondary,
               ),
             )
           ],

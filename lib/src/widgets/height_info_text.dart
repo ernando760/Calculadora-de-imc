@@ -1,4 +1,4 @@
-import 'package:calculadora_de_imc/src/controllers/home_controller.dart';
+import 'package:calculadora_de_imc/src/controllers/imc_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +7,7 @@ class HeightInfoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeController = context.watch<HomeController>();
+    final homeController = context.watch<ImcController>();
     return ChangeNotifierProvider.value(
       value: homeController,
       builder: (context, child) {

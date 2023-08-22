@@ -1,4 +1,5 @@
-import 'package:calculadora_de_imc/src/controllers/home_controller.dart';
+import 'package:calculadora_de_imc/src/controllers/imc_controller.dart';
+import 'package:calculadora_de_imc/src/extensions/context_extension.dart';
 import 'package:calculadora_de_imc/src/widgets/card_box_widget.dart';
 import 'package:calculadora_de_imc/src/widgets/genre_card_box.dart';
 import 'package:calculadora_de_imc/src/widgets/height_info_text.dart';
@@ -32,11 +33,11 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Expanded(child: Consumer<HomeController>(
+          Expanded(child: Consumer<ImcController>(
             builder: (context, repo, _) {
               return GenreCardBox(
                 onTap: () =>
-                    context.read<HomeController>().changeGenre(Genre.male),
+                    context.read<ImcController>().changeGenre(Genre.male),
                 genreSelected: repo.genreCurrent,
                 genre: repo.genreMale,
               );
@@ -45,10 +46,10 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             width: 10,
           ),
-          Expanded(child: Consumer<HomeController>(builder: (context, repo, _) {
+          Expanded(child: Consumer<ImcController>(builder: (context, repo, _) {
             return GenreCardBox(
               onTap: () =>
-                  context.read<HomeController>().changeGenre(Genre.famale),
+                  context.read<ImcController>().changeGenre(Genre.famale),
               genreSelected: repo.genreCurrent,
               genre: repo.genreFamale,
             );
@@ -65,18 +66,12 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Expanded(child: Consumer<HomeController>(builder: (context, repo, _) {
+          Expanded(child: Consumer<ImcController>(builder: (context, repo, _) {
             return Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white60,
-                  border: Border.all(
-                      color: repo.genreCurrent == repo.genreMale
-                          ? Colors.redAccent
-                          : repo.genreCurrent == repo.genreFamale
-                              ? Colors.redAccent
-                              : Colors.black,
-                      width: 3)),
+                borderRadius: BorderRadius.circular(10),
+                color: context.primaryContainer,
+              ),
               child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,34 +98,34 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
-              child: ChangeNotifierProvider<HomeController>.value(
-                  value: context.watch<HomeController>(),
+              child: ChangeNotifierProvider<ImcController>.value(
+                  value: context.watch<ImcController>(),
                   builder: (context, _) {
                     return CardBoxWidget(
                       title: "Peso",
-                      value: context.read<HomeController>().weight.toString(),
-                      add: () => context.read<HomeController>().changeWeight(
-                          context.read<HomeController>().weight + 1),
-                      remove: () => context.read<HomeController>().changeWeight(
-                          context.read<HomeController>().weight - 1),
+                      value: context.read<ImcController>().weight.toString(),
+                      add: () => context.read<ImcController>().changeWeight(
+                          context.read<ImcController>().weight + 1),
+                      remove: () => context.read<ImcController>().changeWeight(
+                          context.read<ImcController>().weight - 1),
                     );
                   })),
           const SizedBox(
             width: 10,
           ),
           Expanded(
-              child: ChangeNotifierProvider<HomeController>.value(
-                  value: context.watch<HomeController>(),
+              child: ChangeNotifierProvider<ImcController>.value(
+                  value: context.watch<ImcController>(),
                   builder: (context, _) {
                     return CardBoxWidget(
                       title: "Idade",
-                      value: context.read<HomeController>().age.toString(),
+                      value: context.read<ImcController>().age.toString(),
                       add: () => context
-                          .read<HomeController>()
-                          .changeAge(context.read<HomeController>().age + 1),
+                          .read<ImcController>()
+                          .changeAge(context.read<ImcController>().age + 1),
                       remove: () => context
-                          .read<HomeController>()
-                          .changeAge(context.read<HomeController>().age - 1),
+                          .read<ImcController>()
+                          .changeAge(context.read<ImcController>().age - 1),
                     );
                   })),
         ],
@@ -147,7 +142,11 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.redAccent,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10))),
-          onPressed: context.read<HomeController>().calcImc,
+          onPressed: () {
+            context.read<ImcController>().calcImc();
+
+            Navigator.pushReplacementNamed(context, "imcInfo");
+          },
           child: const Text(
             "Calcular",
             style: TextStyle(

@@ -1,4 +1,5 @@
-import 'package:calculadora_de_imc/src/controllers/home_controller.dart';
+import 'package:calculadora_de_imc/src/controllers/imc_controller.dart';
+import 'package:calculadora_de_imc/src/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,18 +14,18 @@ class SliderHeightWidget extends StatefulWidget {
 class _SliderHeightWidgetState extends State<SliderHeightWidget> {
   @override
   Widget build(BuildContext context) {
-    final homecontroller = context.watch<HomeController>();
+    final homecontroller = context.watch<ImcController>();
     return ChangeNotifierProvider.value(
       value: homecontroller,
       builder: (context, child) {
         return Slider(
             value: homecontroller.height,
             onChanged: (value) {
-              homecontroller.changeValue(value);
+              homecontroller.changeHeight(value);
             },
             min: 120,
             max: 220,
-            activeColor: Colors.redAccent,
+            activeColor: context.primary,
             inactiveColor: Colors.red[200],
             thumbColor: Colors.red);
       },

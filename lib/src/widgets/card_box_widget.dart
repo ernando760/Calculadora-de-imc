@@ -1,3 +1,4 @@
+import 'package:calculadora_de_imc/src/extensions/context_extension.dart';
 import 'package:flutter/material.dart';
 
 class CardBoxWidget extends StatelessWidget {
@@ -16,8 +17,8 @@ class CardBoxWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [BoxShadow(color: Colors.redAccent, blurRadius: 10)],
+        color: context.primaryContainer,
+        boxShadow: [BoxShadow(color: context.primary, blurRadius: 10)],
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -42,11 +43,10 @@ class CardBoxWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _buildButton(icon: Icons.remove, onPressed: remove),
                   _buildButton(
-                    icon: Icons.add,
-                    onPressed: add,
-                  )
+                      icon: Icons.remove, onPressed: remove, context: context),
+                  _buildButton(
+                      icon: Icons.add, onPressed: add, context: context)
                 ],
               ),
             ),
@@ -56,10 +56,13 @@ class CardBoxWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildButton({void Function()? onPressed, required IconData icon}) {
+  Widget _buildButton(
+      {void Function()? onPressed,
+      required IconData icon,
+      required BuildContext context}) {
     return RawMaterialButton(
       onPressed: onPressed,
-      fillColor: Colors.redAccent,
+      fillColor: context.primary,
       constraints: const BoxConstraints(
           minWidth: 40, maxWidth: 60, minHeight: 40, maxHeight: 60),
       elevation: 1,
